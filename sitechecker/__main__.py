@@ -1,11 +1,11 @@
 import sys
 import os
-
-from sitechecker.checker import site_is_online
-from sitechecker.cli import display_check_result, read_user_cli_args
 from typing import List
 from argparse import Namespace
 import warnings
+
+from sitechecker.checker import site_is_online
+from sitechecker.cli import display_check_result, read_user_cli_args
 
 warnings.filterwarnings("always", category=ResourceWarning)
 
@@ -24,13 +24,15 @@ def main():
 
 
 def _get_urls(args: Namespace) -> List:
-    """_summary_
+    """
+    Function to read the urls and put together with the urls written in 
+    the file, if it exists ou have been passed by the user.
 
     Args:
-        args (Namespace): _description_
+        args (Namespace): The arguments passed by the user in cli command.
 
     Returns:
-        List: _description_
+        List: A list with all the urls.
     """
     urls = args.urls
     if args.file:
@@ -39,13 +41,14 @@ def _get_urls(args: Namespace) -> List:
 
 
 def _get_urls_from_file(path_to_file: str) -> List:
-    """_summary_
+    """
+    Function to read all the urls present in the file specified by the user
 
     Args:
-        path_to_file (str): _description_
+        path_to_file (str): The full or relative patj to the file with the urls.
 
     Returns:
-        List: _description_
+        List: A list with all the urls in the file.
     """
     if os.path.isfile(path_to_file):
         with open(path_to_file) as f:
@@ -54,7 +57,6 @@ def _get_urls_from_file(path_to_file: str) -> List:
             if urls:
                 return urls
             warnings.warn("The file is empty, there are no urls!", ResourceWarning)
-            
     else:
         print("Error: file not found")
     return []
