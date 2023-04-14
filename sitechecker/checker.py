@@ -17,7 +17,7 @@ def site_is_online(url: str, timeout=10) -> bool:
     Returns:
         bool: True if the website is online.
     """
-    error = Exception("Não foi possível estabelecer uma conexão.")
+    error = Exception("Was not possible to stablish a connetion.")
     parser = urlparse(url)
     host = parser.netloc or parser.path.split("/")[0]
     for port in (80, 443):
