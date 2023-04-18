@@ -4,6 +4,8 @@ from typing import List, Tuple
 import warnings
 import click
 from multiprocessing.pool import ThreadPool
+from csv import reader
+import itertools
 
 from sitechecker.checker import site_is_online
 from sitechecker.cli import display_check_result
@@ -12,7 +14,7 @@ warnings.filterwarnings("always", category=ResourceWarning)
 
 @click.command()
 @click.option("--urls", required=False, multiple=True, type=str, help="The web site url you want to check.")
-@click.option("-f", "--file", type=str, required=False, help="The path to the file with all urls to be tested.")
+@click.option("-f", "--file", type=str, default='', required=False, help="The path to the file with all urls to be tested.")
 @click.option("--multiprocessing", default=False, is_flag=True, required=False, help="Add paralelism to check the websites. In case you would like to verify many websites")
 def main(urls: Tuple[str], file: str, multiprocessing: bool):
     """
@@ -34,6 +36,19 @@ def main(urls: Tuple[str], file: str, multiprocessing: bool):
     else:
         _site_check(urls)
 
+def flatten(list_object: List) -> List[str]:
+    """_summary_
+
+    Args:
+        list_object (List): _description_
+
+    Returns:
+        List[str]: _description_
+    """
+    flat_list = itertools.chain.from_iterable(list_object)
+    flat_list = list(flat_list)
+    return flat_list
+
 
 def _get_urls(urls: Tuple[str], file: str) -> List:
     """
@@ -46,7 +61,8 @@ def _get_urls(urls: Tuple[str], file: str) -> List:
     Returns:
         List: A list with all the urls.
     """
-    if urls:
+
+    if file:
         urls += _get_urls_from_file(file)
     return urls
 
@@ -56,15 +72,15 @@ def _get_urls_from_file(path_to_file: str) -> List:
     Function to read all the urls present in the file specified by the user
 
     Args:
-        path_to_file (str): The full or relative patj to the file with the urls.
+        path_to_file (str): The full or relative path to the file with the urls.
 
     Returns:
         List: A list with all the urls in the file.
     """
     if os.path.isfile(path_to_file):
-        with open(path_to_file) as f:
-            urls = f.readlines()
-            urls = list(map(lambda url: url.strip(), urls))
+        with open(path_to_file, 'r') as f:
+            urls = list(reader(f, delimiter=","))
+            urls = flatten(urls)
             if urls:
                 return urls
             warnings.warn("The file is empty, there are no urls!", ResourceWarning)
