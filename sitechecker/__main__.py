@@ -18,9 +18,13 @@ warnings.filterwarnings("always", category=ResourceWarning)
 @click.option("--multiprocessing", default=False, is_flag=True, required=False, help="Add paralelism to check the websites. In case you would like to verify many websites")
 def main(urls: Tuple[str], file: str, multiprocessing: bool):
     """
-    Main function called when run the package as a module. 
-    This function get all the arguments by cli and show the result
-    for each website calling other specific functions.
+    Main function to get the urls as a one dimensional list and
+    call the methods to check the website
+
+    Args:
+        urls (Tuple[str]): A Tuple with all the website urls to be checked. Passed by command line.
+        file (str): The path to the csv file with the website urls to be checked.
+        multiprocessing (bool): A flag to apply parallelism when check the website availability.
     """
     urls = list(urls)
     urls = _get_urls(urls, file)
@@ -37,13 +41,14 @@ def main(urls: Tuple[str], file: str, multiprocessing: bool):
         _site_check(urls)
 
 def flatten(list_object: List) -> List[str]:
-    """_summary_
+    """
+    Helper function to flatt nested list in one dimensional list.
 
     Args:
-        list_object (List): _description_
+        list_object (List): A nested list to be flatten
 
     Returns:
-        List[str]: _description_
+        List[str]: One dimensional list flatten.
     """
     flat_list = itertools.chain.from_iterable(list_object)
     flat_list = list(flat_list)
@@ -56,10 +61,11 @@ def _get_urls(urls: Tuple[str], file: str) -> List:
     the file, if it exists ou have been passed by the user.
 
     Args:
-        args (Namespace): The arguments passed by the user in cli command.
+        urls (Tuple[str]): A Tuple with all the urls passed by command line.
+        file (str): 
 
     Returns:
-        List: A list with all the urls.
+        List: The path to the csv file with the website urls to be checked.
     """
 
     if file:
