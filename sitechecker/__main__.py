@@ -1,9 +1,9 @@
 import sys
 import os
 from typing import List, Tuple
-from argparse import Namespace
 import warnings
 import click
+from multiprocessing.pool import ThreadPool
 
 from sitechecker.checker import site_is_online
 from sitechecker.cli import display_check_result
@@ -24,7 +24,12 @@ def main(urls: Tuple[str], file: str):
     if not urls:
         print("Por favor, insira a URL!")
         sys.exit(1)
-    _site_check(urls)
+
+    with ThreadPool() as pool:
+        items = [(item,) for item in urls]
+        for url in pool.map(_site_check, items):
+            continue
+    #_site_check(urls)
 
 
 def _get_urls(urls: Tuple[str], file: str) -> List:
