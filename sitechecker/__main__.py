@@ -1,29 +1,33 @@
 import sys
 import os
-from typing import List
+from typing import List, Tuple
 from argparse import Namespace
 import warnings
+import click
 
 from sitechecker.checker import site_is_online
-from sitechecker.cli import display_check_result, read_user_cli_args
+from sitechecker.cli import display_check_result
 
 warnings.filterwarnings("always", category=ResourceWarning)
 
-def main():
+@click.command()
+@click.option("--urls", multiple=True, type=str, help="The web site url you want to check.")
+@click.option("-f", "--file", default=str, required=False, help="The path to the file with all urls to be tested.")
+def main(urls: Tuple[str], file: str):
     """
     Main function called when run the package as a module. 
     This function get all the arguments by cli and show the result
     for each website calling other specific functions.
     """
-    user_args = read_user_cli_args()
-    urls = _get_urls(user_args)
+    urls = list(urls)
+    urls = _get_urls(urls, file)
     if not urls:
         print("Por favor, insira a URL!")
         sys.exit(1)
     _site_check(urls)
 
 
-def _get_urls(args: Namespace) -> List:
+def _get_urls(urls: Tuple[str], file: str) -> List:
     """
     Function to read the urls and put together with the urls written in 
     the file, if it exists ou have been passed by the user.
@@ -34,9 +38,8 @@ def _get_urls(args: Namespace) -> List:
     Returns:
         List: A list with all the urls.
     """
-    urls = args.urls
-    if args.file:
-        urls += _get_urls_from_file(args.file)
+    if urls:
+        urls += _get_urls_from_file(file)
     return urls
 
 

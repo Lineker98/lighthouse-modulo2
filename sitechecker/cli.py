@@ -1,37 +1,6 @@
 import argparse
+import click
 
-def read_user_cli_args() -> argparse.Namespace:
-    """
-    Function to get all the user arguments written in cli command (website urls)
-
-    Returns:
-        argparse.Namespace: A Namespace with a list of all urls gotten and/or the file
-        with the urls.
-    """
-
-    parser = argparse.ArgumentParser(
-        prog="sitechecker", description="Teste a disponibilidade de uma URL"
-    )
-
-    parser.add_argument(
-        "-u",
-        "--urls",
-        metavar="URLs",
-        nargs="+",
-        type=str,
-        default=[],
-        help="Insira um ou mais URLs"
-    )
-
-    parser.add_argument(
-        "-f",
-        "--file",
-        metavar="FILE",
-        type=str,
-        default="",
-        help="The path to the file containing all the urls to be checked."
-    )
-    return parser.parse_args()
 
 def display_check_result(result: bool, url: str, error=""):
     """
