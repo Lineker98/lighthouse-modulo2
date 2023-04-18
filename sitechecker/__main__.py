@@ -2,19 +2,40 @@ import sys
 import os
 from typing import List, Tuple
 import warnings
-import click
 from multiprocessing.pool import ThreadPool
 from csv import reader
 import itertools
+
+import click
 
 from sitechecker.checker import site_is_online, display_check_result
 
 warnings.filterwarnings("always", category=ResourceWarning)
 
+
 @click.command()
-@click.option("--urls", required=False, multiple=True, type=str, help="The web site url you want to check.")
-@click.option("-f", "--file", type=str, default='', required=False, help="The path to the file with all urls to be tested.")
-@click.option("--multiprocessing", default=False, is_flag=True, required=False, help="Add paralelism to check the websites. In case you would like to verify many websites")
+@click.option(
+    "--urls",
+    required=False,
+    multiple=True,
+    type=str,
+    help="The web site url you want to check.",
+)
+@click.option(
+    "-f",
+    "--file",
+    type=str,
+    default="",
+    required=False,
+    help="The path to the file with all urls to be tested.",
+)
+@click.option(
+    "--multiprocessing",
+    default=False,
+    is_flag=True,
+    required=False,
+    help="Add paralelism to check the websites. In case you would like to verify many websites",
+)
 def main(urls: Tuple[str], file: str, multiprocessing: bool):
     """
     Main function to get the urls as a one dimensional list and
@@ -39,6 +60,7 @@ def main(urls: Tuple[str], file: str, multiprocessing: bool):
     else:
         _site_check(urls)
 
+
 def flatten(list_object: List) -> List[str]:
     """
     Helper function to flatt nested list in one dimensional list.
@@ -56,12 +78,12 @@ def flatten(list_object: List) -> List[str]:
 
 def _get_urls(urls: Tuple[str], file: str) -> List:
     """
-    Function to read the urls and put together with the urls written in 
+    Function to read the urls and put together with the urls written in
     the file, if it exists ou have been passed by the user.
 
     Args:
         urls (Tuple[str]): A Tuple with all the urls passed by command line.
-        file (str): 
+        file (str):
 
     Returns:
         List: The path to the csv file with the website urls to be checked.
@@ -83,7 +105,7 @@ def _get_urls_from_file(path_to_file: str) -> List:
         List: A list with all the urls in the file.
     """
     if os.path.isfile(path_to_file):
-        with open(path_to_file, 'r') as f:
+        with open(path_to_file, "r") as f:
             urls = list(reader(f, delimiter=","))
             urls = flatten(urls)
             if urls:
@@ -92,7 +114,6 @@ def _get_urls_from_file(path_to_file: str) -> List:
     else:
         print("Error: file not found")
     return []
-
 
 
 def _site_check(urls: List[str]):
@@ -111,6 +132,7 @@ def _site_check(urls: List[str]):
             result = False
             error = str(e)
         display_check_result(result, url, error)
+
 
 if __name__ == "__main__":
     main()

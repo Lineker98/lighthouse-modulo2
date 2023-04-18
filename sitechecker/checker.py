@@ -1,13 +1,13 @@
 from http.client import HTTPConnection
 from urllib.parse import urlparse
-from typing import List
+
 
 def site_is_online(url: str, timeout=10) -> bool:
     """
     Function to test if a website is online
 
     Args:
-        url (str): A list with all the websites urls to be tested. 
+        url (str): A list with all the websites urls to be tested.
         timeout (int, optional): The time in seconds to wait for the website
         response. Defaults to 10.
 
@@ -31,6 +31,7 @@ def site_is_online(url: str, timeout=10) -> bool:
             connection.close()
     raise error
 
+
 def display_check_result(result: bool, url: str, error=""):
     """
     Simple function to display the website status.
@@ -41,7 +42,7 @@ def display_check_result(result: bool, url: str, error=""):
         error (str, optional): The error return by the http connection if
         was not possible to connect with the website. Defaults to "".
     """
-    print(f'O status da "{url}" é:', end =" ")
+    print(f'O status da "{url}" é:', end=" ")
     if result:
         print('"Online!👍"')
     else:
