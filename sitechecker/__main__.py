@@ -11,9 +11,10 @@ from sitechecker.cli import display_check_result
 warnings.filterwarnings("always", category=ResourceWarning)
 
 @click.command()
-@click.option("--urls", multiple=True, type=str, help="The web site url you want to check.")
-@click.option("-f", "--file", default=str, required=False, help="The path to the file with all urls to be tested.")
-def main(urls: Tuple[str], file: str):
+@click.option("--urls", required=False, multiple=True, type=str, help="The web site url you want to check.")
+@click.option("-f", "--file", type=str, required=False, help="The path to the file with all urls to be tested.")
+@click.option("--multiprocessing", default=False, is_flag=True, required=False, help="Add paralelism to check the websites. In case you would like to verify many websites")
+def main(urls: Tuple[str], file: str, multiprocessing: bool):
     """
     Main function called when run the package as a module. 
     This function get all the arguments by cli and show the result
@@ -25,11 +26,13 @@ def main(urls: Tuple[str], file: str):
         print("Por favor, insira a URL!")
         sys.exit(1)
 
-    with ThreadPool() as pool:
-        items = [(item,) for item in urls]
-        for url in pool.map(_site_check, items):
-            continue
-    #_site_check(urls)
+    if multiprocessing:
+        with ThreadPool() as pool:
+            items = [(item,) for item in urls]
+            for url in pool.map(_site_check, items):
+                continue
+    else:
+        _site_check(urls)
 
 
 def _get_urls(urls: Tuple[str], file: str) -> List:
