@@ -7,8 +7,7 @@ from multiprocessing.pool import ThreadPool
 from csv import reader
 import itertools
 
-from sitechecker.checker import site_is_online
-from sitechecker.cli import display_check_result
+from sitechecker.checker import site_is_online, display_check_result
 
 warnings.filterwarnings("always", category=ResourceWarning)
 
