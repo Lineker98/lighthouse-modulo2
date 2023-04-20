@@ -1,0 +1,7 @@
+click==8.1.3
+mypy-extensions==1.0.0
+packaging==23.1
+pathspec==0.11.1
+platformdirs==3.2.0
+-e git+https://lineker98@bitbucket.org/indiciumtech/aula_python_20_09.git@d59ae777bff3fa2056022189f7633838a906e506#egg=site_checker
+tomli==2.0.1
