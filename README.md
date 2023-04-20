@@ -20,19 +20,39 @@ sitechecker/
 
 Para criar um projeto python é recomendável trabalhar com ambientes virtuais, para isso você iniciar um terminal e rodar os seguintes comandos:
 
+- Baixe o repositório em sua máquina, ou clone no terminal com o comando:
 ```
-cd meuprojeto/
-python -m venv venv
-source venv/bin/activate
+git clone https://github.com/Lineker98/desafio-indicium.git
+cd desafio-indicium/
 ```
 
-Se você estiver usando Windows, o comando deverá ser o seguinte>
+- Criação do ambiente virtual para instalação das dependências:
+```
+pip install virtualenv
+```
+
+- Com o venv instalado, e dentro do diretório do projeto, execute:
+```
+python3 -m venv <nome_do_ambiente>
+```
+
+- Para ativação do ambiente, digite no terminal
+    - Linux:
+    ```console
+    source <nome_do_ambiente>/bin/activate
+    ```
+
+    - Windows:
+    ```
+    <name_do_ambientet>\Scripts\activate
+    ```
+
+- Com o ambiente já instalado e ativado, precisamos agora instalar as dependências, ainda no terminal, digite:
 
 ```
-PS> python -m venv venv
-PS> venv\Scripts\activate
-(venv) PS>
+pip install -r requirements.txt
 ```
+
 
 ## 2. Executar a aplicação
 
