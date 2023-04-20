@@ -56,12 +56,6 @@ pip install -r requirements.txt
 
 ## 2. Executar a aplicação
 
- - Primeiramente, devemos instalar os pacotes requeridos. Dentro da pasta do projeto, digite:
-
- ``` 
- pip install -r requirements.txt
- ```
-
  - Para veirificar as opções de argumentos via terminal, digite:
  ```
  python -m sitechecker --help
