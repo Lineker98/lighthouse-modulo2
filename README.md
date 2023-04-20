@@ -53,7 +53,7 @@ PS> venv\Scripts\activate
  Além disso, podemos passar as urls diretamente via terminal, digitando "--urls" para cada url desejada. Exemplo:
  ``` 
  python -m sitechecker --urls globo.com --urls google.com --urls globoesporte.com
- ```.
+ ```
 
  Caso deseja verificar muitos websites, podemos utilizar o parâmetro de multiprocessamento.
  ```
