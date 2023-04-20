@@ -37,27 +37,40 @@ PS> venv\Scripts\activate
 ## 2. Executar a aplicação
 
  - Primeiramente, devemos instalar os pacotes requeridos. Dentro da pasta do projeto, digite:
- ``` pip install -r requirements.txt```
+
+ ``` 
+ pip install -r requirements.txt
+ ```
 
  - Para veirificar as opções de argumentos via terminal, digite:
- ```python -m sitechecker --help```
+ ```
+ python -m sitechecker --help
+ ```
 
  Assim você pode criar um arquivo txt com todas as urls que deseja consultar e passar seu caminho
  para o parâmetro "-f".
 
  Além disso, podemos passar as urls diretamente via terminal, digitando "--urls" para cada url desejada. Exemplo:
- ``` python -m sitechecker --urls globo.com --urls google.com --urls globoesporte.com```.
+ ``` 
+ python -m sitechecker --urls globo.com --urls google.com --urls globoesporte.com
+ ```.
 
  Caso deseja verificar muitos websites, podemos utilizar o parâmetro de multiprocessamento.
- ```python -m sitechecker -f urls.txt --multiprocessing```
+ ```
+ python -m sitechecker -f urls.txt --multiprocessing
+ ```
 
 ## 3 Instalar a aplicação (Opcional)
 
  - Para Instalar a aplicação basta digitar:
- ```pip install -e . ```
+ ```
+ pip install -e . 
+ ```
 
  Agora você pode utilizar o comando "sitechecker diretamente do terminal":
- ```sitechecker -f urls.txt --multiprocessing```
+ ```
+ sitechecker -f urls.txt --multiprocessing
+ ```
 
 # Credits
 
