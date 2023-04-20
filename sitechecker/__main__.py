@@ -3,8 +3,6 @@ import os
 from typing import List, Tuple
 import warnings
 from multiprocessing.pool import ThreadPool
-from csv import reader
-import itertools
 
 import click
 
@@ -61,21 +59,6 @@ def main(urls: Tuple[str], file: str, multiprocessing: bool):
         _site_check(urls)
 
 
-def flatten(list_object: List) -> List[str]:
-    """
-    Helper function to flatt nested list in one dimensional list.
-
-    Args:
-        list_object (List): A nested list to be flatten
-
-    Returns:
-        List[str]: One dimensional list flatten.
-    """
-    flat_list = itertools.chain.from_iterable(list_object)
-    flat_list = list(flat_list)
-    return flat_list
-
-
 def _get_urls(urls: Tuple[str], file: str) -> List:
     """
     Function to read the urls and put together with the urls written in
@@ -106,8 +89,7 @@ def _get_urls_from_file(path_to_file: str) -> List:
     """
     if os.path.isfile(path_to_file):
         with open(path_to_file, "r") as f:
-            urls = list(reader(f, delimiter=","))
-            urls = flatten(urls)
+            urls = [url.strip() for url in f]
             if urls:
                 return urls
             warnings.warn("The file is empty, there are no urls!", ResourceWarning)
